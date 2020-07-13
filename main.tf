@@ -32,8 +32,8 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
       "echo 'deb https://pkg.jenkins.io/debian-stable binary/' >> /etc/apt/sources.list",
       "apt update",
       "yes|apt install jenkins",
-      "yes|systemctl status jenkins",
-      "yes|ufw allow 8080",
+      "systemctl status jenkins",
+      "ufw allow 8080",
       "yes|ufw enable",
       "intial_password_jenkins=$(cat /var/lib/jenkins/secrets/initialAdminPassword)",
       "echo $intial_password_jenkins"
