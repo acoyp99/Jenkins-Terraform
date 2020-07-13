@@ -27,7 +27,7 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
   provisioner "remote-exec" {
     inline = [
       "apt update && yes | apt upgrade", 
-      "apt install openjdk-8-jdk",
+      "yes|apt install openjdk-8-jdk",
       "wget –q –O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add –",
       "echo 'deb https://pkg.jenkins.io/debian-stable binary/' >> /etc/apt/sources.list",
       "apt update",
@@ -37,7 +37,6 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
       "yes|ufw enable",
       "intial_password_jenkins=$(cat /var/lib/jenkins/secrets/initialAdminPassword)",
       "echo $intial_password_jenkins"
-
     ]
   }
 }
