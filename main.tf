@@ -26,12 +26,12 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
 
   provisioner "remote-exec" {
     inline = [
-      "apt update && yes | apt upgrade", 
+      "apt update", 
       "yes|apt install openjdk-8-jdk",
-      "wget –q –O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add –",
+      "wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -",
       "echo 'deb https://pkg.jenkins.io/debian-stable binary/' >> /etc/apt/sources.list",
       "apt update",
-      "yes|apt install Jenkins",
+      "yes|apt install jenkins",
       "yes|systemctl status jenkins",
       "yes|ufw allow 8080",
       "yes|ufw enable",
