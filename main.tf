@@ -6,14 +6,14 @@ resource "ibm_compute_ssh_key" "ssh_key_bin" {
 
 resource "ibm_compute_vm_instance" "terraform_p_sample" {
   hostname                   = "${var.hostname}"
-  domain                     = "${var.domain}"
-  os_reference_code          = "${var.os_reference}"
-  datacenter                 = "${var.datacenter}"
-  network_speed              = "${var.network_speed}"
-  hourly_billing             = "${var.hourly_billing}"
-  private_network_only       = "${var.network_mode}"
-  cores                      = "${var.cores}"
-  memory                     = "${var.memory}"
+  domain                     = "ibm.cloud-landingzone.com"
+  os_reference_code          = "UBUNTU_18_64"
+  datacenter                 = "dal10"
+  network_speed              = "100"
+  hourly_billing             = "true"
+  private_network_only       = "false"
+  cores                      = "1"
+  memory                     = "1024"
   disks                      = [25]
   local_disk                 = false
   ssh_key_ids                = [ "${ibm_compute_ssh_key.ssh_key_bin.id}" ]
@@ -26,16 +26,18 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
 
   provisioner "remote-exec" {
     inline = [
-      "yes | sudo apt-get update", 
-      "cd ..",
-      "wget -nv -P /downloads https://packages.chef.io/files/stable/chef-workstation/0.18.3/ubuntu/18.04/chef-workstation_0.18.3-1_amd64.deb",
-      "dpkg -i /downloads/chef-workstation_0.18.3-1_amd64.deb",
-      "echo yes | chef generate repo chef-repo",
-      "cd chef-repo/cookbooks",
-      "git clone ${var.cookbook_git}",
-      "mv ${var.repo_name}/${var.cookbook_name}/ /chef-repo/cookbooks/",
-      "cd ..",
-      "chef-client --local-mode --override-runlist ${var.cookbook_name}"
+      "apt update && yes | apt upgrade", 
+      "apt install openjdk-8-jdk",
+      "wget –q –O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add –",
+      "echo 'deb https://pkg.jenkins.io/debian-stable binary/' >> /etc/apt/sources.list",
+      "apt update",
+      "yes|apt install Jenkins",
+      "yes|systemctl status jenkins",
+      "yes|ufw allow 8080",
+      "yes|ufw enable",
+      "intial_password_jenkins=$(cat /var/lib/jenkins/secrets/initialAdminPassword)",
+      "echo $intial_password_jenkins"
+
     ]
   }
 }
