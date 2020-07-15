@@ -1,11 +1,11 @@
 
 resource "ibm_compute_ssh_key" "ssh_key_bin" {
-  label      = "${var.ssh_label}"
-  public_key = "${var.ssh_public_key}"
+/*   label      = "${var.ssh_label}"
+  public_key = "${var.ssh_public_key}" */
 }
 
 resource "ibm_compute_vm_instance" "terraform_p_sample" {
-  hostname                   = "${var.hostname}"
+  hostname                   = "vsi-jenkins"
   domain                     = "ibm.cloud-landingzone.com"
   os_reference_code          = "UBUNTU_18_64"
   datacenter                 = "dal10"
@@ -16,14 +16,14 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
   memory                     = "1024"
   disks                      = [25]
   local_disk                 = false
-  ssh_key_ids                = [ "${ibm_compute_ssh_key.ssh_key_bin.id}" ]
+/*   ssh_key_ids                = [ "${ibm_compute_ssh_key.ssh_key_bin.id}" ]
 
   connection {
     type = "ssh"
     user = "root"
     private_key = "${var.private_key}"
-  }
-
+  } */
+/* 
   provisioner "remote-exec" {
     inline = [
       "apt update", 
@@ -36,7 +36,7 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
       "timeout 10 ufw allow 8080"
 
     ]
-  }
+  } */
 }
 
 /*       "intial_password_jenkins=$(cat /var/lib/jenkins/secrets/initialAdminPassword)",
