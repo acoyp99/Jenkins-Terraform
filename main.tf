@@ -33,7 +33,7 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
       "apt update",
       "yes|apt install jenkins",
       "systemctl status jenkins",
-      "timeout 10 yes | ufw allow 8080",
+      "timeout 10 ufw allow 8080",
       
 
     ]
