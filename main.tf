@@ -34,7 +34,7 @@ resource "ibm_compute_vm_instance" "terraform_p_sample" {
       "yes|apt install jenkins",
       "systemctl status jenkins",
       "yes | ufw allow 8080",
-      "cat /var/lib/jenkins/secrets/initialAdminPassword"
+      
 
     ]
   }
