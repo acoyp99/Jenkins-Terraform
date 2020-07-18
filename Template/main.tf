@@ -3,7 +3,7 @@ data "ibm_resource_group" "group" {
 }
 
 resource "ibm_is_ssh_key" "sshkeyjenkins" {
-  name       = "keyssh-vpc"
+  name       = "keyssh-jenkins"
   public_key = "${var.ssh_public}"
 }
 
