@@ -75,7 +75,7 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_out" {
 }
 
 resource "ibm_is_floating_ip" "ipf1" {
-  name   = "ipfortomcat"
+  name   = "ipforjenkins"
   target = "${ibm_is_instance.vsi1.primary_network_interface.0.id}"
   resource_group = "${data.ibm_resource_group.group.id}"
 }
