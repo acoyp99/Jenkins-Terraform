@@ -28,7 +28,7 @@ resource "ibm_is_security_group" "securitygroupforjenkins" {
 
 resource "ibm_is_instance" "vsiforjenkins" {
   name    = "instanceforvpc"
-  image   = "7eb4e35b-4257-56f8-d7da-326d85452591"
+  image   = "fc538f61-7dd6-4408-978c-c6b85b69fe76"
   profile = "b-2x8"
   resource_group = "${data.ibm_resource_group.group.id}"
 
