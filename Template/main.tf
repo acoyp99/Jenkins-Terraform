@@ -35,7 +35,7 @@ resource "ibm_is_instance" "vsiforjenkins" {
 
   primary_network_interface {
     subnet = "${ibm_is_subnet.subnetjenkins.id}"
-    security_groups = ["${ibm_is_security_group.securitygroupfortomcat.id}"]
+    security_groups = ["${ibm_is_security_group.securitygroupforjenkins.id}"]
   }
 
   vpc       = "${ibm_is_vpc.vpcfortomcat.id}"
@@ -44,7 +44,7 @@ resource "ibm_is_instance" "vsiforjenkins" {
 }
 
 resource "ibm_is_security_group_rule" "testacc_security_group_rule_all" {
-  group     = "${ibm_is_security_group.securitygroupfortomcat.id}"
+  group     = "${ibm_is_security_group.securitygroupforjenkins.id}"
   direction = "inbound"
   tcp {
     port_min = 22
@@ -53,7 +53,7 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_all" {
 }
 
 resource "ibm_is_security_group_rule" "testacc_security_group_rule_tomcat" {
-  group     = "${ibm_is_security_group.securitygroupfortomcat.id}"
+  group     = "${ibm_is_security_group.securitygroupforjenkins.id}"
   direction = "inbound"
   tcp {
     port_min = 8080
@@ -62,7 +62,7 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_tomcat" {
 }
 
 resource "ibm_is_security_group_rule" "testacc_security_group_rule_icmp" {
-  group     = "${ibm_is_security_group.securitygroupfortomcat.id}"
+  group     = "${ibm_is_security_group.securitygroupforjenkins.id}"
   direction = "inbound"
   icmp {
     type = 8
@@ -70,13 +70,13 @@ resource "ibm_is_security_group_rule" "testacc_security_group_rule_icmp" {
 }
 
 resource "ibm_is_security_group_rule" "testacc_security_group_rule_out" {
-  group     = "${ibm_is_security_group.securitygroupfortomcat.id}"
+  group     = "${ibm_is_security_group.securitygroupforjenkins.id}"
   direction = "outbound"
 }
 
 resource "ibm_is_floating_ip" "ipf1" {
   name   = "ipforjenkins"
-  target = "${ibm_is_instance.vsi1.primary_network_interface.0.id}"
+  target = "${ibm_is_instance.vsiforjenkins.primary_network_interface.0.id}"
   resource_group = "${data.ibm_resource_group.group.id}"
 }
 
