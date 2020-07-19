@@ -3,17 +3,17 @@ data "ibm_resource_group" "group" {
 }
 
 resource "ibm_is_ssh_key" "sshkeyjenkins" {
-  name       = "keyssh-jenkins"
+  name       = "keysshforjenkins"
   public_key = "${var.ssh_public}"
 }
 
 resource "ibm_is_vpc" "vpcforjenkins" {
-  name = "vpc-demo-jenkins"
+  name = "vpcdemoforjenkins"
   resource_group = "${data.ibm_resource_group.group.id}"
 }
 
 resource "ibm_is_subnet" "subnetjenkins" {
-  name            = "subnet-vpc"
+  name            = "subnetforvpc"
   vpc             = "${ibm_is_vpc.vpcforjenkins.id}"
   zone            = "us-south-1"
   total_ipv4_address_count= "256"
@@ -27,7 +27,7 @@ resource "ibm_is_security_group" "securitygroupforjenkins" {
 
 
 resource "ibm_is_instance" "vsiforjenkins" {
-  name    = "instance-vpc"
+  name    = "instanceforvpc"
   image   = "7eb4e35b-4257-56f8-d7da-326d85452591"
   profile = "b-2x8"
   resource_group = "${data.ibm_resource_group.group.id}"
