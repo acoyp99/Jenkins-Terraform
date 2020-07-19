@@ -38,7 +38,7 @@ resource "ibm_is_instance" "vsiforjenkins" {
     security_groups = ["${ibm_is_security_group.securitygroupforjenkins.id}"]
   }
 
-  vpc       = "${ibm_is_vpc.vpcfortomcat.id}"
+  vpc       = "${ibm_is_vpc.vpcforjenkins.id}"
   zone      = "us-south-1"
   keys = ["${ibm_is_ssh_key.sshkeyjenkins.id}"]
 }
